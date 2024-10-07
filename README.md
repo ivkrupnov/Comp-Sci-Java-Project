@@ -13,7 +13,7 @@ You can work with a partner but I expect collaboration to lead to more efficienc
 
 Submit your code (link to Repl.it or a zipped file). Make sure you include the .java and any other libraries or resources including images or other files.
 
-Record two screencasts:
+# Record two screencasts:
 
   One recording of you running/playing their Java game or project. You need to make sure that all aspects of your game are demonstrated in your recording.
   
