@@ -12,8 +12,8 @@ public class Game implements KeyListener {
 
 	private JFrame window;
 
-	public static final int width = 50;
-	public static final int height = 50;
+	public static final int width = 40;
+	public static final int height = 40;
 	public static final int dimension = 20;
 	public static final int difficulty = 10;
 
