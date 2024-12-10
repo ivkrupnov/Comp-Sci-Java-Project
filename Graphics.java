@@ -1,16 +1,14 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Font;
-//import java.awt.GraphicsEnvironment;
-
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class Graphics extends JPanel implements ActionListener{
-	private Timer t = new Timer(10, this);
+	private Timer t = new Timer(100, this);
 	public String state;
 	
 	private TronPlayer p;
@@ -39,29 +37,32 @@ public class Graphics extends JPanel implements ActionListener{
 		
 		g2d.setColor(Color.black);
 		g2d.fillRect(0, 0, Game.width * Game.dimension + 5, Game.height * Game.dimension + 5);
-		g2d.setColor(Color.gray.darker().darker().darker().darker());
-		// make grid lines
-		for(int i = 0; i < Game.width; i++) {
-			g2d.drawLine(i * Game.dimension, 0, i * Game.dimension, Game.height * Game.dimension);
-		}
-		for(int i = 0; i < Game.height; i++) {
-			g2d.drawLine(0, i * Game.dimension, Game.width * Game.dimension, i * Game.dimension);
+
+		if (state.equals("RUNNING")) {
+			g2d.setColor(Color.gray.darker().darker().darker().darker());
+			// make grid lines
+			for(int i = 0; i < Game.width; i++) {
+				g2d.drawLine(i * Game.dimension, 0, i * Game.dimension, Game.height * Game.dimension);
+			}
+			for(int i = 0; i < Game.height; i++) {
+				g2d.drawLine(0, i * Game.dimension, Game.width * Game.dimension, i * Game.dimension);
+			}
 		}
 		
-		Font snakeTitleFont = new Font("Arial", Font.BOLD, 35
-		);
+		Font snakeTitleFont = new Font("Arial", Font.BOLD, 35);
 		Font buttonFont = new Font("Arial", Font.CENTER_BASELINE, 20);
+		Font scoreFont = new Font("Arial", Font.PLAIN, 18);
 		
 		if(state == "START") {
 			g2d.setColor(Color.white);
-			g2d.drawString("Snake Game", Game.width/2 * Game.dimension - 10, Game.height/2 * Game.dimension -90);
-			g2d.setFont(snakeTitleFont);
-			
-			g2d.drawString("Press Any Key to start", Game.width/2 * Game.dimension - 40, Game.height / 2 * Game.dimension - 20);
-			g2d.setFont(buttonFont);
 
-			g2d.drawString("Difficulty", Game.width/2 * Game.dimension, Game.height / 2 * Game.dimension + 20);
+			g2d.setFont(snakeTitleFont);
+			g2d.drawString("Snake Game", (Game.width * Game.dimension - g2d.getFontMetrics().stringWidth("Snake Game")) / 2, Game.height/2 * Game.dimension -90);
+			
 			g2d.setFont(buttonFont);
+			g2d.drawString("Press Any Key to start", (Game.width * Game.dimension - g2d.getFontMetrics().stringWidth("Press Any Key to start")) / 2, Game.height / 2 * Game.dimension - 20);
+
+			g2d.drawString("Difficulty", (Game.width * Game.dimension - g2d.getFontMetrics().stringWidth("Difficulty")) / 2, Game.height / 2 * Game.dimension + 20);
 		}
 		else if(state == "RUNNING") {
 			Rectangle pHead = p.getBody().get(0);
@@ -90,9 +91,15 @@ public class Graphics extends JPanel implements ActionListener{
 				g2d.setColor(Color.YELLOW);
 				
 			}
+
+			g2d.setColor(Color.white);
+			g2d.setFont(scoreFont);
+			g2d.drawString("Player Score: " + (p.getBody().size() - 3), 10, 20);
+			g2d.drawString("AI Score: " + (c.getBody().size() - 3), 10, 40);
 		}
 		else {
 			g2d.setColor(Color.white);
+			g2d.setFont(buttonFont);
 			// check who wins
 			if(c.getBody().size() - 3 > p.getBody().size() - 3) {
 				g2d.drawString("AI Wins", Game.width/2 * Game.dimension - 40, Game.height / 2 * Game.dimension - 60);
