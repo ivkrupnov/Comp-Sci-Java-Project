@@ -1,3 +1,4 @@
+//Various libraries imported
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
@@ -6,6 +7,7 @@ public class TronPlayer {
 	
 	private String move; //NOTHING, UP, DOWN, LEFT, RIGHT
 	
+	//Displays the user block on screen, sets the coordinates of the block
 	public TronPlayer() {
 		body = new ArrayList<>();
 		
@@ -16,6 +18,7 @@ public class TronPlayer {
 		move = "NOTHING";
 	}
 	
+	//Key movememnt based on the key pressed, changes the posiiton of the block
 	public void move() {
 		if(move != "NOTHING") {
 			Rectangle first = body.get(0);

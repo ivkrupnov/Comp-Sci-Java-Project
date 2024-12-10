@@ -69,10 +69,12 @@ public class Graphics extends JPanel implements ActionListener{
 			}
 		}
 		
+		//Creating various Fonts for the text to be displayed in the game
 		Font snakeTitleFont = new Font("Arial", Font.BOLD, 35);
 		Font buttonFont = new Font("Arial", Font.CENTER_BASELINE, 20);
 		Font scoreFont = new Font("Arial", Font.PLAIN, 18);
 		
+		//In the START status, we draw our home screen with text and position it on screen.
 		if(state == "START") {
 			g2d.setColor(Color.white);
 
@@ -86,6 +88,7 @@ public class Graphics extends JPanel implements ActionListener{
 
 			difficultyBounds = new Rectangle((Game.width * Game.dimension - g2d.getFontMetrics().stringWidth("Difficulty")) / 2, Game.height / 2 * Game.dimension + 20 - g2d.getFontMetrics().getAscent(), g2d.getFontMetrics().stringWidth("Difficulty"), g2d.getFontMetrics().getHeight());
 		}
+		//In status RUNNING, it draws the grid, and starts the AI and the player race
 		else if(state == "RUNNING") {
 			Rectangle pHead = p.getBody().get(0);
 			g2d.setColor(Color.GREEN);
@@ -100,7 +103,7 @@ public class Graphics extends JPanel implements ActionListener{
 			}
 
 				
-
+			// Draws the TronAI block and colors it
 			Rectangle cHead = c.getBody().get(0);
 			g2d.setColor(Color.YELLOW);
 			for(Rectangle r : c.getBody()) {
@@ -114,12 +117,14 @@ public class Graphics extends JPanel implements ActionListener{
 				
 			}
 
+			// Draw the score during the gameplay and updates it as the player and AI move in grid.
 			g2d.setColor(Color.white);
 			g2d.setFont(scoreFont);
 			g2d.drawString("Player Score: " + (p.getBody().size() - 3), 10, 20);
 			g2d.drawString("AI Score: " + (c.getBody().size() - 3), 10, 40);
 		}
 
+		//In DIFFICULTY status, it loads the difficulty screen with various text options such as Easy Medium and Hard to choose from, as well as a back option.
 		else if (state.equals("DIFFICULTY")) {
 			g2d.setColor(Color.white);
 			g2d.setFont(buttonFont);

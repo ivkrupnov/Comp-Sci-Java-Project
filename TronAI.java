@@ -1,12 +1,15 @@
+//Various libraries
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+//Various variable for the AI to keep track of movement and its best move in the game, as well as the directions
 public class TronAI {
     private ArrayList<Rectangle> body;
     private String move;
     private String bestMove;
     private static final String[] DIRECTIONS = { "UP", "DOWN", "LEFT", "RIGHT" };
 
+    //Initializing the TronAI
     public TronAI() {
         body = new ArrayList<>();
         Rectangle initialPosition = new Rectangle(Game.dimension, Game.dimension);
@@ -16,6 +19,7 @@ public class TronAI {
         bestMove = "NOTHING";
     }
 
+    //AI checks for the best move possible and moves the block position
     public void move(int playerX, int playerY, String playerMove, ArrayList<Rectangle> playerBody, int depth) {
         if (!playerMove.equals("NOTHING")) {
             Rectangle head = body.get(0);
