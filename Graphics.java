@@ -3,12 +3,14 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Font;
+//import java.awt.GraphicsEnvironment;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class Graphics extends JPanel implements ActionListener{
-	private Timer t = new Timer(100, this);
+	private Timer t = new Timer(10, this);
 	public String state;
 	
 	private TronPlayer p;
@@ -30,6 +32,7 @@ public class Graphics extends JPanel implements ActionListener{
 	}
 	
 	public void paintComponent(java.awt.Graphics g) {
+
 		super.paintComponent(g);
 		
 		Graphics2D g2d = (Graphics2D) g;
@@ -45,11 +48,20 @@ public class Graphics extends JPanel implements ActionListener{
 			g2d.drawLine(0, i * Game.dimension, Game.width * Game.dimension, i * Game.dimension);
 		}
 		
-
+		Font snakeTitleFont = new Font("Arial", Font.BOLD, 35
+		);
+		Font buttonFont = new Font("Arial", Font.CENTER_BASELINE, 20);
 		
 		if(state == "START") {
 			g2d.setColor(Color.white);
+			g2d.drawString("Snake Game", Game.width/2 * Game.dimension - 10, Game.height/2 * Game.dimension -90);
+			g2d.setFont(snakeTitleFont);
+			
 			g2d.drawString("Press Any Key to start", Game.width/2 * Game.dimension - 40, Game.height / 2 * Game.dimension - 20);
+			g2d.setFont(buttonFont);
+
+			g2d.drawString("Difficulty", Game.width/2 * Game.dimension, Game.height / 2 * Game.dimension + 20);
+			g2d.setFont(buttonFont);
 		}
 		else if(state == "RUNNING") {
 			Rectangle pHead = p.getBody().get(0);
@@ -91,6 +103,11 @@ public class Graphics extends JPanel implements ActionListener{
 			g2d.drawString("AI Score: " + (c.getBody().size() - 3), Game.width/2 * Game.dimension - 40, Game.height / 2 * Game.dimension - 40);
 			g2d.drawString("Your Score: " + (p.getBody().size() - 3), Game.width/2 * Game.dimension - 40, Game.height / 2 * Game.dimension - 20);
 		}
+	}
+
+	public void updateGameComponenets(TronPlayer newPlayer, TronAI newComputer) {
+		this.p = newPlayer;
+		this.c = newComputer;
 	}
 
 	@Override
