@@ -4,6 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -14,6 +16,8 @@ public class Graphics extends JPanel implements ActionListener{
 	private TronPlayer p;
 	private TronAI c;
 	private Game game;
+	private Rectangle difficultyBounds;
+	private Rectangle backBounds;
 	
 	public Graphics(Game g) {
 		t.start();
@@ -27,6 +31,22 @@ public class Graphics extends JPanel implements ActionListener{
 		this.addKeyListener(g);
 		this.setFocusable(true);
 		this.setFocusTraversalKeysEnabled(false);
+
+		this.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (difficultyBounds != null && difficultyBounds.contains(e.getPoint())) {
+					System.out.println("Entering Difficulty choices.");
+					state = "DIFFICULTY";
+					repaint();
+				} else if (backBounds != null && backBounds.contains(e.getPoint())) {
+					System.out.println("Returning to Home Screen.");
+					state = "START";
+					repaint();
+				}
+			}
+		});
+		
 	}
 	
 	public void paintComponent(java.awt.Graphics g) {
@@ -63,6 +83,8 @@ public class Graphics extends JPanel implements ActionListener{
 			g2d.drawString("Press Any Key to start", (Game.width * Game.dimension - g2d.getFontMetrics().stringWidth("Press Any Key to start")) / 2, Game.height / 2 * Game.dimension - 20);
 
 			g2d.drawString("Difficulty", (Game.width * Game.dimension - g2d.getFontMetrics().stringWidth("Difficulty")) / 2, Game.height / 2 * Game.dimension + 20);
+
+			difficultyBounds = new Rectangle((Game.width * Game.dimension - g2d.getFontMetrics().stringWidth("Difficulty")) / 2, Game.height / 2 * Game.dimension + 20 - g2d.getFontMetrics().getAscent(), g2d.getFontMetrics().stringWidth("Difficulty"), g2d.getFontMetrics().getHeight());
 		}
 		else if(state == "RUNNING") {
 			Rectangle pHead = p.getBody().get(0);
@@ -97,6 +119,22 @@ public class Graphics extends JPanel implements ActionListener{
 			g2d.drawString("Player Score: " + (p.getBody().size() - 3), 10, 20);
 			g2d.drawString("AI Score: " + (c.getBody().size() - 3), 10, 40);
 		}
+
+		else if (state.equals("DIFFICULTY")) {
+			g2d.setColor(Color.white);
+			g2d.setFont(buttonFont);
+
+			g2d.drawString("Easy", (Game.width * Game.dimension - g2d.getFontMetrics().stringWidth("Easy")) / 2, Game.height / 2 * Game.dimension - 20);
+			g2d.drawString("Medium", (Game.width * Game.dimension - g2d.getFontMetrics().stringWidth("Medium")) / 2, Game.height / 2 * Game.dimension + 20);
+			g2d.drawString("Hard", (Game.width * Game.dimension - g2d.getFontMetrics().stringWidth("Hard")) / 2, Game.height / 2 * Game.dimension + 60);
+
+			String backText = "Back";
+			g2d.drawString(backText, (Game.width * Game.dimension - g2d.getFontMetrics().stringWidth(backText)) / 2, Game.height / 2 * Game.dimension + 130);
+			backBounds = new Rectangle((Game.width * Game.dimension - g2d.getFontMetrics().stringWidth(backText)) / 2, Game.height / 2 * Game.dimension + 130 - g2d.getFontMetrics().getAscent(), g2d.getFontMetrics().stringWidth(backText), g2d.getFontMetrics().getHeight());
+
+		}
+
+
 		else {
 			g2d.setColor(Color.white);
 			g2d.setFont(buttonFont);
