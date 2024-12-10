@@ -1,9 +1,13 @@
+//Importing various libraries
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 
+//Main class that starts the game
 public class Game implements KeyListener {
+
+	// Variables for the player character, AI character, drawing the game, and game window.
 	private TronPlayer player;
 
 	private TronAI computer;
@@ -12,12 +16,15 @@ public class Game implements KeyListener {
 
 	private JFrame window;
 
+	//Sets the game resolution, game width and height, size of each title, and difficulty level of AI.
 	public static final int width = 40;
 	public static final int height = 40;
 	public static final int dimension = 20;
 	public static final int difficulty = 10;
 
+	//Main method constuctor that intializes the game.
 	public Game() {
+		//Creates game window, TronPlayer, TronAI, and Graphics.
 		window = new JFrame();
 
 		player = new TronPlayer();
@@ -28,6 +35,7 @@ public class Game implements KeyListener {
 
 		window.add(graphics);
 
+		//Sets up the game window, 
 		window.setTitle("Tron Game");
 		window.setSize(width * dimension + 16, height * dimension + dimension + 20);
 		window.setVisible(true);
@@ -104,9 +112,18 @@ public class Game implements KeyListener {
 			if (keyCode == KeyEvent.VK_D && player.getMove() != "LEFT") {
 				player.right();
 			}
-		} else {
+		} else if (graphics.state.equals("END") && keyCode == KeyEvent.VK_ENTER) {
+			resetGame();
+		} else if (graphics.state.equals("START")) {
 			this.start();
 		}
+	}
+
+	public void resetGame(){
+		player = new TronPlayer();
+		computer = new TronAI();
+		graphics.updateGameComponenets(player, computer);
+		graphics.state = "START";
 	}
 
 	@Override
