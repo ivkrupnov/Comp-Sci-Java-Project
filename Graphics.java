@@ -79,7 +79,7 @@ public class Graphics extends JPanel implements ActionListener{
 			g2d.setColor(Color.white);
 
 			g2d.setFont(snakeTitleFont);
-			g2d.drawString("Snake Game", (Game.width * Game.dimension - g2d.getFontMetrics().stringWidth("Snake Game")) / 2, Game.height/2 * Game.dimension -90);
+			g2d.drawString("Tron Game", (Game.width * Game.dimension - g2d.getFontMetrics().stringWidth("Snake Game")) / 2, Game.height/2 * Game.dimension -90);
 			
 			g2d.setFont(buttonFont);
 			g2d.drawString("Press Any Key to start", (Game.width * Game.dimension - g2d.getFontMetrics().stringWidth("Press Any Key to start")) / 2, Game.height / 2 * Game.dimension - 20);
@@ -91,15 +91,15 @@ public class Graphics extends JPanel implements ActionListener{
 		//In status RUNNING, it draws the grid, and starts the AI and the player race
 		else if(state == "RUNNING") {
 			Rectangle pHead = p.getBody().get(0);
-			g2d.setColor(Color.GREEN);
+			g2d.setColor(Color.BLUE);
 			for(Rectangle r : p.getBody()) {
 				if(r == pHead) {
-					g2d.setColor(Color.GREEN.darker().darker());
+					g2d.setColor(Color.BLUE);
 				}
 				g2d.fill(r);
 				g2d.setColor(Color.black);
 				g2d.draw(r);
-				g2d.setColor(Color.GREEN);
+				g2d.setColor(Color.BLUE);
 			}
 
 				

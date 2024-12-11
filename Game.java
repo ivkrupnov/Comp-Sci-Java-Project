@@ -1,7 +1,6 @@
 //Importing various libraries
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import javax.swing.JFrame;
 
 //Main class that starts the game
@@ -42,10 +41,12 @@ public class Game implements KeyListener {
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
+	//Start method that starts the game and updates the game status
 	public void start() {
 		graphics.state = "RUNNING";
 	}
 
+	//
 	public void update() {
 		if (graphics.state == "RUNNING") {
 			computer.move(player.getX(), player.getY(), player.getMove(), player.getBody(), difficulty);
