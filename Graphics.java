@@ -1,13 +1,16 @@
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JPanel;
-import javax.swing.Timer;
+// import java.awt.Color;
+// import java.awt.Font;
+// import java.awt.Graphics2D;
+// import java.awt.Rectangle;
+// import java.awt.event.ActionEvent;
+// import java.awt.event.ActionListener;
+// import java.awt.event.MouseAdapter;
+// import java.awt.event.MouseEvent;
+// import javax.swing.JPanel;
+// import javax.swing.Timer;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
 
 public class Graphics extends JPanel implements ActionListener{
 	private Timer t = new Timer(100, this);
