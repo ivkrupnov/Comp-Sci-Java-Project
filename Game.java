@@ -19,7 +19,7 @@ public class Game implements KeyListener {
 	public static final int width = 40;
 	public static final int height = 40;
 	public static final int dimension = 20;
-	public static final int difficulty = 10;
+	public static int levelAI = 2;
 
 	//Main method constuctor that intializes the game.
 	public Game() {
@@ -49,7 +49,7 @@ public class Game implements KeyListener {
 	//
 	public void update() {
 		if (graphics.state == "RUNNING") {
-			computer.move(player.getX(), player.getY(), player.getMove(), player.getBody(), difficulty);
+			computer.move(player.getX(), player.getY(), player.getMove(), player.getBody(), levelAI);
 
 			if (!check_wall_collision() && !check_self_collision() && !check_ai_collision()) {
 				player.move();
@@ -115,15 +115,17 @@ public class Game implements KeyListener {
 			}
 		} else if (graphics.state.equals("END") && keyCode == KeyEvent.VK_ENTER) {
 			resetGame();
-		} else if (graphics.state.equals("START")) {
-			this.start();
+		} else if (graphics.state.equals("START") && keyCode == KeyEvent.VK_ENTER) {
+			start();
+		} else if (graphics.state.equals("START") && keyCode == KeyEvent.VK_ESCAPE) {
+			System.exit(0);
 		}
 	}
 
 	public void resetGame(){
 		player = new TronPlayer();
 		computer = new TronAI();
-		graphics.updateGameComponenets(player, computer);
+		graphics.updateGameComponents(player, computer);
 		graphics.state = "START";
 	}
 
@@ -141,6 +143,14 @@ public class Game implements KeyListener {
 
 	public void setplayer(TronPlayer player) {
 		this.player = player;
+	}
+
+	public void setLevelAI(int level) {
+		levelAI = level;
+	}
+
+	public int getLevelAI() {
+		return levelAI;
 	}
 
 	public JFrame getWindow() {
