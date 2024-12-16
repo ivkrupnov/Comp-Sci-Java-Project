@@ -11,10 +11,18 @@ public class TronAI {
 
     //Initializing the TronAI
     public TronAI() {
+        // create a new body
         body = new ArrayList<>();
+
+        // set initial position
         Rectangle initialPosition = new Rectangle(Game.dimension, Game.dimension);
+
+        // set the location of the block in the left of the screen
         initialPosition.setLocation(Game.width / 3 * Game.dimension, Game.height / 2 * Game.dimension);
+
+        // add the block to the body
         body.add(initialPosition);
+
         move = "NOTHING";
         bestMove = "NOTHING";
     }
@@ -22,6 +30,7 @@ public class TronAI {
     //AI checks for the best move possible and moves the block position
     public void move(int playerX, int playerY, String playerMove, ArrayList<Rectangle> playerBody, int depth) {
         if (!playerMove.equals("NOTHING")) {
+            // get the first block of the body
             Rectangle head = body.get(0);
 
             bestMove = findBestMove(head, body, playerBody, depth);
@@ -32,8 +41,8 @@ public class TronAI {
         }
     }
 
-    private String findBestMove(Rectangle head, ArrayList<Rectangle> aiBody, ArrayList<Rectangle> playerBody,
-            int depth) {
+
+    private String findBestMove(Rectangle head, ArrayList<Rectangle> aiBody, ArrayList<Rectangle> playerBody, int depth) {
 
         String bestMove = "NOTHING";
         int maxSafeMoves = -1;
@@ -55,8 +64,7 @@ public class TronAI {
         return bestMove;
     }
 
-    private int countSafeMoves(Rectangle head, ArrayList<Rectangle> aiBody, ArrayList<Rectangle> playerBody,
-            int depth) {
+    private int countSafeMoves(Rectangle head, ArrayList<Rectangle> aiBody, ArrayList<Rectangle> playerBody, int depth) {
         if (depth == 0) {
             return 1;
         }
@@ -76,6 +84,7 @@ public class TronAI {
         return safeMoves;
     }
 
+    // Checks if the move is valid
     private boolean isValidMove(int x, int y, ArrayList<Rectangle> aiBody, ArrayList<Rectangle> playerBody) {
         // Check game boundaries
         if (x < 0 || y < 0 || x >= Game.width * Game.dimension || y >= Game.height * Game.dimension)
@@ -92,27 +101,30 @@ public class TronAI {
             if (part.x == x && part.y == y)
                 return false;
         }
-
         return true;
     }
 
-    private Rectangle moveInDirection(Rectangle pos, String direction) {
-        Rectangle newPos = new Rectangle(Game.dimension, Game.dimension);
+    private Rectangle moveInDirection(Rectangle currentPosition, String direction) {
+
+        // create a new position
+        Rectangle newPosition = new Rectangle(Game.dimension, Game.dimension);
+
+        // set the new position based on the move
         switch (direction) {
             case "UP":
-                newPos.setLocation(pos.x, pos.y - Game.dimension);
+                newPosition.setLocation(currentPosition.x, currentPosition.y - Game.dimension);
                 break;
             case "DOWN":
-                newPos.setLocation(pos.x, pos.y + Game.dimension);
+                newPosition.setLocation(currentPosition.x, currentPosition.y + Game.dimension);
                 break;
             case "LEFT":
-                newPos.setLocation(pos.x - Game.dimension, pos.y);
+                newPosition.setLocation(currentPosition.x - Game.dimension, currentPosition.y);
                 break;
             case "RIGHT":
-                newPos.setLocation(pos.x + Game.dimension, pos.y);
+                newPosition.setLocation(currentPosition.x + Game.dimension, currentPosition.y);
                 break;
         }
-        return newPos;
+        return newPosition;
     }
 
     public ArrayList<Rectangle> getBody() {
