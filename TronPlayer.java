@@ -9,11 +9,15 @@ public class TronPlayer {
 	
 	//Displays the user block on screen, sets the coordinates of the block
 	public TronPlayer() {
+		// create a new body
 		body = new ArrayList<>();
-		
-		Rectangle temp = new Rectangle(Game.dimension, Game.dimension);
-		temp.setLocation(Game.width / 2 * Game.dimension, Game.height / 2 * Game.dimension); // set center location
-		body.add(temp);
+
+		// set initial position
+		Rectangle initialPosition = new Rectangle(Game.dimension, Game.dimension);
+		// set the location of the block in the center of the screen
+		initialPosition.setLocation(Game.width / 2 * Game.dimension, Game.height / 2 * Game.dimension);
+		// add the block to the body
+		body.add(initialPosition);
 		
 		move = "NOTHING";
 	}
@@ -21,56 +25,73 @@ public class TronPlayer {
 	//Key movememnt based on the key pressed, changes the posiiton of the block
 	public void move() {
 		if(move != "NOTHING") {
-			Rectangle first = body.get(0);
+
+			// get the first block of the body
+			Rectangle headPosition = body.get(0);
 			
-			Rectangle temp = new Rectangle(Game.dimension, Game.dimension);
+			// create a new position
+			Rectangle newPosition = new Rectangle(Game.dimension, Game.dimension);
 			
+			// set the new position based on the move
 			if(move == "UP") {
-				temp.setLocation(first.x, first.y - Game.dimension);
+				newPosition.setLocation(headPosition.x, headPosition.y - Game.dimension);
 			}
 			else if(move == "DOWN") {
-				temp.setLocation(first.x, first.y + Game.dimension);
+				newPosition.setLocation(headPosition.x, headPosition.y + Game.dimension);
 			}
 			else if(move == "LEFT") {
-				temp.setLocation(first.x - Game.dimension, first.y);
+				newPosition.setLocation(headPosition.x - Game.dimension, headPosition.y);
 			}
 			else{
-				temp.setLocation(first.x + Game.dimension, first.y);
+				newPosition.setLocation(headPosition.x + Game.dimension, headPosition.y);
 			}
 			
-			body.add(0, temp);
+			// add the new position to the body
+			body.add(0, newPosition);
 		}
 	}
 	
+	// Returns the body of the block
 	public ArrayList<Rectangle> getBody() {
 		return body;
 	}
 	
+	// Sets the body of the block
 	public void setBody(ArrayList<Rectangle> body) {
 		this.body = body;
 	}
 	
+	// Returns the x coordinate of the head block
 	public int getX() {
 		return body.get(0).x;
 	}
 	
+	// Returns the y coordinate of the head block
 	public int getY() {
 		return body.get(0).y ;
 	}
-	
-	public String getMove() {
+
+	// Returns the move direction of the block
+		public String getMove() {
 		return move;
 	}
 	
+	// Sets UP as the move direction
 	public void up() {
 		move = "UP";
 	}
+
+	// Sets DOWN as the move direction
 	public void down() {
 		move = "DOWN";
 	}
+
+	// Sets LEFT as the move direction
 	public void left() {
 		move = "LEFT";
 	}
+
+	// Sets RIGHT as the move direction
 	public void right() {
 		move = "RIGHT";
 	}
