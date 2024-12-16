@@ -60,17 +60,6 @@ public class Graphics extends JPanel implements ActionListener{
 		
 		g2d.setColor(Color.black);
 		g2d.fillRect(0, 0, Game.width * Game.dimension + 5, Game.height * Game.dimension + 5);
-
-		if (state.equals("RUNNING")) {
-			g2d.setColor(Color.gray.darker().darker().darker().darker());
-			// make grid lines
-			for(int i = 0; i < Game.width; i++) {
-				g2d.drawLine(i * Game.dimension, 0, i * Game.dimension, Game.height * Game.dimension);
-			}
-			for(int i = 0; i < Game.height; i++) {
-				g2d.drawLine(0, i * Game.dimension, Game.width * Game.dimension, i * Game.dimension);
-			}
-		}
 		
 		//Creating various Fonts for the text to be displayed in the game
 		Font snakeTitleFont = new Font("Arial", Font.BOLD, 35);
@@ -85,32 +74,45 @@ public class Graphics extends JPanel implements ActionListener{
 			g2d.drawString("Tron Game", (Game.width * Game.dimension - g2d.getFontMetrics().stringWidth("Snake Game")) / 2, Game.height/2 * Game.dimension -90);
 			
 			g2d.setFont(buttonFont);
-			g2d.drawString("Press Any Key to start", (Game.width * Game.dimension - g2d.getFontMetrics().stringWidth("Press Any Key to start")) / 2, Game.height / 2 * Game.dimension - 20);
+			g2d.drawString("Or Press Any Key to start", (Game.width * Game.dimension - g2d.getFontMetrics().stringWidth("Press Any Key to start")) / 2, Game.height / 2 * Game.dimension - 20);
 
-			g2d.drawString("Difficulty", (Game.width * Game.dimension - g2d.getFontMetrics().stringWidth("Difficulty")) / 2, Game.height / 2 * Game.dimension + 20);
+			g2d.drawString("Select Difficulty", (Game.width * Game.dimension - g2d.getFontMetrics().stringWidth("Difficulty")) / 2, Game.height / 2 * Game.dimension + 20);
 
 			difficultyBounds = new Rectangle((Game.width * Game.dimension - g2d.getFontMetrics().stringWidth("Difficulty")) / 2, Game.height / 2 * Game.dimension + 20 - g2d.getFontMetrics().getAscent(), g2d.getFontMetrics().stringWidth("Difficulty"), g2d.getFontMetrics().getHeight());
 		}
 		//In status RUNNING, it draws the grid, and starts the AI and the player race
 		else if(state == "RUNNING") {
+			// Draw the grid
+			g2d.setColor(Color.gray.darker().darker().darker().darker());
+			// Draw vertical grid lines
+			for(int i = 0; i < Game.width; i++) {
+				g2d.drawLine(i * Game.dimension, 0, i * Game.dimension, Game.height * Game.dimension);
+			}
+			// Draw horizontal grid lines
+			for(int i = 0; i < Game.height; i++) {
+				g2d.drawLine(0, i * Game.dimension, Game.width * Game.dimension, i * Game.dimension);
+			}
+
+			// Draws the TronPlayer block and colors it
 			Rectangle pHead = p.getBody().get(0);
 			g2d.setColor(Color.BLUE);
 			for(Rectangle r : p.getBody()) {
 				if(r == pHead) {
-					g2d.setColor(Color.BLUE);
+					// Darken the head of the player
+					g2d.setColor(Color.BLUE.darker().darker());
 				}
 				g2d.fill(r);
 				g2d.setColor(Color.black);
 				g2d.draw(r);
 				g2d.setColor(Color.BLUE);
 			}
-
 				
 			// Draws the TronAI block and colors it
 			Rectangle cHead = c.getBody().get(0);
 			g2d.setColor(Color.YELLOW);
 			for(Rectangle r : c.getBody()) {
 				if(r == cHead) {
+					// Darken the head of the AI
 					g2d.setColor(Color.YELLOW.darker().darker());
 				} 
 				g2d.fill(r);
