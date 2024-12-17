@@ -1,3 +1,4 @@
+
 //Various libraries
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ public class TronAI {
     private String bestMove;
     private static final String[] DIRECTIONS = { "UP", "DOWN", "LEFT", "RIGHT" };
 
-    //Initializing the TronAI
+    // Initializing the TronAI
     public TronAI() {
         // create a new body
         body = new ArrayList<>();
@@ -27,7 +28,7 @@ public class TronAI {
         bestMove = "NOTHING";
     }
 
-    //AI checks for the best move possible and moves the block position
+    // AI checks for the best move possible and moves the block position
     public void move(int playerX, int playerY, String playerMove, ArrayList<Rectangle> playerBody, int depth) {
         if (!playerMove.equals("NOTHING")) {
             // get the first block of the body
@@ -41,7 +42,7 @@ public class TronAI {
         }
     }
 
-
+    // Finds the best move for the AI and returns the move direction
     private String findBestMove(Rectangle head, ArrayList<Rectangle> aiBody, ArrayList<Rectangle> playerBody, int depth) {
 
         String bestMove = "NOTHING";
@@ -52,7 +53,7 @@ public class TronAI {
             if (isValidMove(newHead.x, newHead.y, aiBody, playerBody)) {
                 ArrayList<Rectangle> newAiBody = new ArrayList<>(aiBody);
                 newAiBody.add(0, newHead);
-
+                
                 int safeMoves = countSafeMoves(newHead, newAiBody, playerBody, depth - 1);
                 if (safeMoves > maxSafeMoves) {
                     maxSafeMoves = safeMoves;
@@ -64,6 +65,7 @@ public class TronAI {
         return bestMove;
     }
 
+    // Recursive function to count the number of safe moves until the depth is reached
     private int countSafeMoves(Rectangle head, ArrayList<Rectangle> aiBody, ArrayList<Rectangle> playerBody, int depth) {
         if (depth == 0) {
             return 1;
@@ -80,7 +82,6 @@ public class TronAI {
                 safeMoves += countSafeMoves(newHead, newAiBody, playerBody, depth - 1);
             }
         }
-
         return safeMoves;
     }
 

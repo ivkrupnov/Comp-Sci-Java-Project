@@ -1,3 +1,4 @@
+
 //Importing various libraries
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -6,82 +7,81 @@ import javax.swing.JFrame;
 //Main class that starts the game
 public class Game implements KeyListener {
 
-	// Variables for the player character, AI character, drawing the game, and game window.
+	// Variables for the player character, AI character, drawing the game, and game
+	// window.
 	private TronPlayer player;
-
 	private TronAI computer;
-
 	private Graphics graphics;
-
 	private JFrame window;
 
-	//Sets the game resolution, game width and height, size of each title, and difficulty level of AI.
+	// Sets the game resolution, game width and height, size of each title, and
+	// difficulty level of AI.
 	public static final int width = 40;
 	public static final int height = 40;
 	public static final int dimension = 20;
-	public static int levelAI = 2;
+	private int levelAI = 2; // default level
 
-	//Main method constuctor that intializes the game.
+	// Main method constuctor that intializes the game.
 	public Game() {
-		//Creates game window, TronPlayer, TronAI, and Graphics.
+		// Creates game window, TronPlayer, TronAI, and Graphics.
 		window = new JFrame();
-
 		player = new TronPlayer();
-
 		computer = new TronAI();
-
 		graphics = new Graphics(this);
 
 		window.add(graphics);
 
-		//Sets up the game window, 
+		// Sets up the game window,
 		window.setTitle("Tron Game");
 		window.setSize(width * dimension + 16, height * dimension + dimension + 20);
 		window.setVisible(true);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	//Start method that starts the game and updates the game status
+	// Start method that starts the game and updates the game status
 	public void start() {
 		graphics.state = "RUNNING";
 	}
 
-	//
+	// Update method that updates the game status
 	public void update() {
 		if (graphics.state == "RUNNING") {
-			computer.move(player.getX(), player.getY(), player.getMove(), player.getBody(), levelAI);
+			computer.move(player.getHeadX(), player.getHeadY(), player.getMove(), player.getBody(), levelAI);
 
 			if (!check_wall_collision() && !check_self_collision() && !check_ai_collision()) {
 				player.move();
 			} else {
 				graphics.state = "END";
 			}
-			
+
 		}
 	}
 
+	// Method that checks if the player collides with the wall
 	private boolean check_wall_collision() {
-		if (player.getX() < 0 || player.getX() >= width * dimension
-				|| player.getY() < 0 || player.getY() >= height * dimension) {
+		if (player.getHeadX() < 0 || player.getHeadX() >= width * dimension
+				|| player.getHeadY() < 0 || player.getHeadY() >= height * dimension) {
 			return true;
 		}
 		return false;
 	}
 
+	// Method that checks if the player collides with the AI
 	private boolean check_ai_collision() {
 		for (int i = 0; i < computer.getBody().size(); i++) {
-			if (player.getX() == computer.getBody().get(i).x
-					&& player.getY() == computer.getBody().get(i).y) {
+			if (player.getHeadX() == computer.getBody().get(i).x
+					&& player.getHeadY() == computer.getBody().get(i).y) {
 				return true;
 			}
 		}
 		return false;
 	}
 
+	// Method that checks if the player collides with itself
 	private boolean check_self_collision() {
 		for (int i = 1; i < player.getBody().size(); i++) {
-			if (player.getX() == player.getBody().get(i).x &&
-					player.getY() == player.getBody().get(i).y) {
+			if (player.getHeadX() == player.getBody().get(i).x &&
+					player.getHeadY() == player.getBody().get(i).y) {
 				return true;
 			}
 		}
@@ -113,6 +113,10 @@ public class Game implements KeyListener {
 			if (keyCode == KeyEvent.VK_D && player.getMove() != "LEFT") {
 				player.right();
 			}
+
+			if (keyCode == KeyEvent.VK_ESCAPE) {
+				resetGame();
+			}
 		} else if (graphics.state.equals("END") && keyCode == KeyEvent.VK_ENTER) {
 			resetGame();
 		} else if (graphics.state.equals("START") && keyCode == KeyEvent.VK_ENTER) {
@@ -122,7 +126,8 @@ public class Game implements KeyListener {
 		}
 	}
 
-	public void resetGame(){
+	// Method that resets the game
+	public void resetGame() {
 		player = new TronPlayer();
 		computer = new TronAI();
 		graphics.updateGameComponents(player, computer);
@@ -141,10 +146,6 @@ public class Game implements KeyListener {
 		return computer;
 	}
 
-	public void setplayer(TronPlayer player) {
-		this.player = player;
-	}
-
 	public void setLevelAI(int level) {
 		levelAI = level;
 	}
@@ -152,13 +153,4 @@ public class Game implements KeyListener {
 	public int getLevelAI() {
 		return levelAI;
 	}
-
-	public JFrame getWindow() {
-		return window;
-	}
-
-	public void setWindow(JFrame window) {
-		this.window = window;
-	}
-
 }

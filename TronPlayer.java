@@ -62,12 +62,12 @@ public class TronPlayer {
 	}
 	
 	// Returns the x coordinate of the head block
-	public int getX() {
+	public int getHeadX() {
 		return body.get(0).x;
 	}
 	
 	// Returns the y coordinate of the head block
-	public int getY() {
+	public int getHeadY() {
 		return body.get(0).y ;
 	}
 
