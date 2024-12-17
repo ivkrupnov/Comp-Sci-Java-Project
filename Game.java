@@ -99,19 +99,19 @@ public class Game implements KeyListener {
 
 		if (graphics.state == "RUNNING") {
 			if (keyCode == KeyEvent.VK_W && player.getMove() != "DOWN") {
-				player.up();
+				player.setMoveUp();
 			}
 
 			if (keyCode == KeyEvent.VK_S && player.getMove() != "UP") {
-				player.down();
+				player.setMoveDown();
 			}
 
 			if (keyCode == KeyEvent.VK_A && player.getMove() != "RIGHT") {
-				player.left();
+				player.setMoveLeft();
 			}
 
 			if (keyCode == KeyEvent.VK_D && player.getMove() != "LEFT") {
-				player.right();
+				player.setMoveRight();
 			}
 
 			if (keyCode == KeyEvent.VK_ESCAPE) {

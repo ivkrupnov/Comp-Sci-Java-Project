@@ -77,22 +77,22 @@ public class TronPlayer {
 	}
 	
 	// Sets UP as the move direction
-	public void up() {
+	public void setMoveUp() {
 		move = "UP";
 	}
 
 	// Sets DOWN as the move direction
-	public void down() {
+	public void setMoveDown() {
 		move = "DOWN";
 	}
 
 	// Sets LEFT as the move direction
-	public void left() {
+	public void setMoveLeft() {
 		move = "LEFT";
 	}
 
 	// Sets RIGHT as the move direction
-	public void right() {
+	public void setMoveRight() {
 		move = "RIGHT";
 	}
 }
